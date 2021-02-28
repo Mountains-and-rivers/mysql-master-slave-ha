@@ -77,6 +77,8 @@ rm -rf /var/log/mysqld.log
  sudo systemctl start mysqld
  sudo systemctl status mysqld
  
+ # 创建mysql home目录
+ mkdir  /home/mysql
  # 切换mysql 用户
  sudo -u mysql /bin/bash
 ```
