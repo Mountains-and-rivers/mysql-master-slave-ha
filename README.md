@@ -45,6 +45,7 @@ yum remove  mariadb-connector-c-config-3.0.7-1.el8.noarch -y
 5,安装
 
 ```
+sudo yum module disable mysql
 sudo yum install mysql-community-server
 ```
 
