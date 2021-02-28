@@ -392,7 +392,7 @@ bulk_insert_buffer_size=128M
 
 mysql> CHANGE MASTER TO MASTER_HOST='192.168.31.214',
     -> MASTER_USER='repl',
-    -> MASTER_PASSWORD='password',
+    -> MASTER_PASSWORD='MyNewPass4!',
     -> MASTER_LOG_FILE='mysql-bin.000001',
     -> MASTER_LOG_POS=184;
 注意这个 184 即，日志的偏移量要保持一致，这样从库就开始从 184 开始进行，保证与主库执行同样的操作。
