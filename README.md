@@ -373,7 +373,7 @@ $ sudo vi /etc/my.cnf
 最后，重启 MySQL 服务
 
 $ sudo systemctl restart mysqld
-注意，本例使用 IP 进行 MySQL 主从服务的配置，如果主库发生异常，应用程序需要更改访问从库的连接，更好的办法是使用 DNS 服务，只要更新 DNS ，并删除 DNS 的缓存即可，不需要更改程序的配置。 DNS 设置可以参考 CentOS 7 使用 bind 配置私有网络的 DNS
+注意，本例使用 IP 进行 MySQL 主从服务的配置，如果主库发生异常，应用程序需要更改访问从库的连接，更好的办法是使用 DNS 服务，只要更新 DNS ，并删除 DNS 的缓存即可，不需要更改程序的配置。 DNS 设置可以参考 CentOS 8 使用 bind 配置私有网络的 DNS
 ```
 
 5,从另一个服务器开始复制
