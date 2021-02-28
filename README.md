@@ -489,7 +489,7 @@ vrrp_instance VI_1 {
     notify_stop /home/mysql/stop.sh
 
     virtual_ipaddress {
-        192.168.148.240
+        192.168.31.230
     }
 }
 ```
@@ -567,7 +567,7 @@ notify_down	检查mysql服务down掉后执行的脚本
 ```
 [mysql@master ~]$ more /home/mysql/mysql_check.sh 
 #!/bin/bash
-. /home/mysql/.bashrc
+. /home/mysql/.bash_history
 count=1
 
 while true
@@ -601,7 +601,7 @@ done
 [mysql@master ~]$ more /home/mysql/master.sh 
 #!/bin/bash
 
-. /home/mysql/.bashrc
+. /home/mysql/.bash_history
 
 Master_Log_File=$(/usr/bin/mysql -uroot -pMyNewPass4! -S /var/lib/mysql/mysql.sock -e "show slave status\G" | grep -w Master_Log_File | awk -F": " '{print $2}')
 Relay_Master_Log_File=$(/usr/bin/mysql -uroot -pMyNewPass4! -S /var/lib/mysql/mysql.sock -e "show slave status\G" | grep -w Relay_Master_Log_File | awk -F": " '{print $2}')
@@ -637,7 +637,7 @@ done
 [mysql@master ~]$ more /home/mysql/stop.sh 
 #!/bin/bash
 
-. /home/mysql/.bashrc
+. /home/mysql/.bash_history
 
 M_File1=$(/usr/bin/mysql -uroot -pMyNewPass4! -S /var/lib/mysql/mysql.sock -e "show master status\G" | awk -F': ' '/File/{print $2}')
 M_Position1=$(/usr/bin/mysql -uroot -pMyNewPass4! -S /var/lib/mysql/mysql.sock -e "show master status\G" | awk -F': ' '/Position/{print $2}')
@@ -671,11 +671,19 @@ done
 
 ```
 /etc/init.d/keepalived start
+
 ```
 
 ## 测试
 
 1，vip远程登录
+
+```
+mysql -uroot MyNewPass4! -h192.168.31.230
+
+```
+
+2，建表名录入数据
 
 ```
 mysql> create table t2(id int,name varchar(100));
@@ -684,15 +692,8 @@ Query OK, 0 rows affected (0.07 sec)
 mysql>
 mysql> insert into t2 values (1,'abc');
 Query OK, 1 row affected (0.02 sec)
-```
-
-2，建表名录入数据
 
 ```
-mysql -uroot MyNewPass4! -h192.168.31.230
-```
-
-
 
 3，模拟mysql主库crash
 
@@ -704,31 +705,33 @@ pkill -9 mysqld
 [root@mater mysql]# 
 [root@mater mysql]# 
 [root@mater mysql]# ip addr
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN 
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
     inet6 ::1/128 scope host 
        valid_lft forever preferred_lft forever
-2: eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
-    link/ether 00:0c:29:ea:02:f7 brd ff:ff:ff:ff:ff:ff
-    inet 192.168.148.143/24 brd 192.168.148.255 scope global eth2
-    inet6 fe80::20c:29ff:feea:2f7/64 scope link 
+2: ens160: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:0c:29:d7:f7:b7 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.31.214/24 brd 192.168.31.255 scope global dynamic noprefixroute ens160
+       valid_lft 34123sec preferred_lft 34123sec
+    inet6 fe80::c6de:67c0:837b:1c77/64 scope link noprefixroute 
        valid_lft forever preferred_lft forever
-查看vip是否飘到备库
 
-[root@candicate ~]# ip addr
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN 
+查看vip是否飘到备库
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
     inet6 ::1/128 scope host 
        valid_lft forever preferred_lft forever
-2: eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
-    link/ether 00:0c:29:05:64:83 brd ff:ff:ff:ff:ff:ff
-    inet 192.168.148.144/24 brd 192.168.148.255 scope global eth2
-    inet 192.168.148.240/32 scope global eth2
-    inet6 fe80::20c:29ff:fe05:6483/64 scope link 
+2: ens160: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:0c:29:d7:f7:b7 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.31.214/24 brd 192.168.31.255 scope global dynamic noprefixroute ens160
+       valid_lft 34123sec preferred_lft 34123sec
+    inet 192.168.148.230/24 scope global ens160
+    inet6 fe80::c6de:67c0:837b:1c77/64 scope link noprefixroute 
        valid_lft forever preferred_lft forever
-[root@candicate ~]# 
 
 此时客户端连接正常
 查看切换的时候的binlog位置
