@@ -52,14 +52,8 @@ sudo yum install mysql-community-server -y
 6,卸载
 
 ```
-# 卸载安装包
-rpm -qa |grep -i mysql
-yum remove mysql-community-common-5.7.33-1.el7.x86_64 -y
-yum remove  mysql-community-client-5.7.33-1.el7.x86_64 -y
-yum remove  mysql-community-libs-5.7.33-1.el7.x86_64 -y
-yum remove  mysql-community-server-5.7.33-1.el7.x86_64 -y
-yum remove  mysql57-community-release-el7-11.noarch -y
 
+# 卸载安装包
 yum remove `rpm -qa |grep -i mysql` -y
 # 清除相关目录
 rm -rf `find / -name mysql`
