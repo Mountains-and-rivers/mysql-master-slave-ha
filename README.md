@@ -185,7 +185,7 @@ mysql> SHOW VARIABLES LIKE 'character%';
 8 rows in set (0.00 sec
 ```
 
-12,开启端口
+12,开启端口[若防火墙未关闭]
 
 ```
 sudo firewall-cmd --zone=public --add-port=3306/tcp --permanent
