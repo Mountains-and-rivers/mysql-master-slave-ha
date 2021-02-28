@@ -59,6 +59,8 @@ yum remove  mysql-community-client-5.7.33-1.el7.x86_64 -y
 yum remove  mysql-community-libs-5.7.33-1.el7.x86_64 -y
 yum remove  mysql-community-server-5.7.33-1.el7.x86_64 -y
 yum remove  mysql57-community-release-el7-11.noarch -y
+
+yum remove `rpm -qa |grep -i mysql` -y
 # 清除相关目录
 rm -rf `find / -name mysql`
 # 删除配置文件
