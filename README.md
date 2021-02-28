@@ -155,7 +155,7 @@ MySQL 默认为 latin1, 一般修改为 UTF-8
 ```
 vi /etc/my.cnf
 [mysqld]
-# 在myslqd下添加如下键值对
+# 在mysqld下添加如下键值对
 character_set_server=utf8
 init_connect='SET NAMES utf8'
 ```
