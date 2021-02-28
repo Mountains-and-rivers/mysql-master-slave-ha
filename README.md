@@ -74,6 +74,9 @@ rm -rf /var/log/mysqld.log
  sudo systemctl enable mysqld
  sudo systemctl start mysqld
  sudo systemctl status mysqld
+ 
+ # 切换mysql 用户
+ sudo -u mysql /bin/bash
 ```
 
 8,修改root默认密码
