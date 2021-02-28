@@ -83,6 +83,9 @@ rm -rf /var/log/mysqld.log
  chgrp  mysql mysql
  # 切换mysql 用户
  sudo -u mysql # 未授权脚本运行需添加参数 /bin/bash
+ # 设置mysql 登录名
+ export PS1="[\u@\h]\[$(tput sgr0)\]"
+ 
 ```
 
 8,修改root默认密码
