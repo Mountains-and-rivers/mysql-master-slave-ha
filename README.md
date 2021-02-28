@@ -73,7 +73,7 @@ rm -rf /var/log/mysqld.log
  
  # 创建mysql home目录
  mkdir  /home/mysql
- # 授权脚本运行
+ # 变更属组
  chgrp  mysql mysql
  # 切换mysql 用户
  sudo -u mysql # 未授权脚本运行需添加参数 /bin/bash
