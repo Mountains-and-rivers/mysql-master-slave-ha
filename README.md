@@ -77,6 +77,8 @@ rm -rf /var/log/mysqld.log
  chgrp  mysql mysql
  # 切换mysql 用户
  sudo -u mysql # 未授权脚本运行需添加参数 /bin/bash
+ # 创建脚本配置文件
+ touch .bashrc 
  # 设置mysql 登录名
  export PS1="[\u@\h]\[$(tput sgr0)\]"
  
@@ -565,7 +567,7 @@ notify_down	检查mysql服务down掉后执行的脚本
 ```
 [mysql@master ~]$ more /home/mysql/mysql_check.sh 
 #!/bin/bash
-. /home/mysql/.bash_history
+. /home/mysql/.bashrc
 count=1
 
 while true
@@ -599,7 +601,7 @@ done
 [mysql@master ~]$ more /home/mysql/master.sh 
 #!/bin/bash
 
-. /home/mysql/.bash_history
+. /home/mysql/.bashrc
 
 Master_Log_File=$(/usr/bin/mysql -uroot -pMyNewPass4! -S /var/lib/mysql/mysql.sock -e "show slave status\G" | grep -w Master_Log_File | awk -F": " '{print $2}')
 Relay_Master_Log_File=$(/usr/bin/mysql -uroot -pMyNewPass4! -S /var/lib/mysql/mysql.sock -e "show slave status\G" | grep -w Relay_Master_Log_File | awk -F": " '{print $2}')
@@ -635,7 +637,7 @@ done
 [mysql@master ~]$ more /home/mysql/stop.sh 
 #!/bin/bash
 
-. /home/mysql/.bash_history
+. /home/mysql/.bashrc
 
 M_File1=$(/usr/bin/mysql -uroot -pMyNewPass4! -S /var/lib/mysql/mysql.sock -e "show master status\G" | awk -F': ' '/File/{print $2}')
 M_Position1=$(/usr/bin/mysql -uroot -pMyNewPass4! -S /var/lib/mysql/mysql.sock -e "show master status\G" | awk -F': ' '/Position/{print $2}')
