@@ -672,8 +672,6 @@ done
 ```
 /etc/init.d/keepalived start
 
-若启动失败，则查看日志
-
 如果未成功，查看日志，并调整配置文件
 [root@mater ~]# tail -100f /var/log/messages
 ...
