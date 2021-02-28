@@ -24,7 +24,7 @@ curl -LO http://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
 2,安装 mysql 源
 
 ```
-sudo yum localinstall mysql57-community-release-el7-11.noarch.rpm
+sudo yum localinstall mysql57-community-release-el7-11.noarch.rpm -y
 ```
 
 3,检查 yum 源是否安装成功
@@ -46,7 +46,7 @@ yum remove  mariadb-connector-c-config-3.0.7-1.el8.noarch -y
 
 ```
 sudo yum module disable mysql
-sudo yum install mysql-community-server
+sudo yum install mysql-community-server -y
 ```
 
 6,启动
