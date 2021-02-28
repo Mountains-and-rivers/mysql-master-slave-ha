@@ -87,7 +87,8 @@ rm -rf /var/log/mysqld.log
  export PS1="[\u@\h]\[$(tput sgr0)\]"
  
 ```
-
+参考：http://bashrcgenerator.com 创建登录样式
+![image](https://github.com/Mountains-and-rivers/mysql-master-slave-ha/blob/main/image/mysql-ps1.png)
 8,修改root默认密码
 
 ```
