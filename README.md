@@ -49,7 +49,26 @@ sudo yum module disable mysql
 sudo yum install mysql-community-server -y
 ```
 
-6,启动
+6,卸载
+
+```
+# 卸载安装包
+rpm -qa |grep -i mysql
+yum remove mysql-community-common-5.7.33-1.el7.x86_64 -y
+yum remove  mysql-community-client-5.7.33-1.el7.x86_64 -y
+yum remove  mysql-community-libs-5.7.33-1.el7.x86_64 -y
+yum remove  mysql-community-server-5.7.33-1.el7.x86_64 -y
+yum remove  mysql57-community-release-el7-11.noarch -y
+# 清除相关目录
+rm -rf `find / -name mysql`
+# 删除配置文件
+rm -rf /etc/my.cnf
+# 删除日志
+rm -rf /var/log/mysqld.log
+
+```
+
+7,启动
 
 ```
  sudo systemctl enable mysqld
@@ -57,7 +76,7 @@ sudo yum install mysql-community-server -y
  sudo systemctl status mysqld
 ```
 
-7,修改root默认密码
+8,修改root默认密码
 
 ```
 MySQL 5.7 启动后，在 /var/log/mysqld.log 文件中给 root 生成了一个默认密码。通过下面的方式找到 root 默认密码，然后登录 mysql 进行修改：
@@ -87,7 +106,7 @@ mysql> SHOW VARIABLES LIKE 'validate_password%';
 +--------------------------------------+--------+
 ```
 
-8,密码校验策略
+9,密码校验策略
 
 指定密码校验策略
 
@@ -114,13 +133,13 @@ validate_password = off
 sudo systemctl restart mysqld
 ```
 
-9,添加远程登录用户
+10,添加远程登录用户
 
 ```
 GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' IDENTIFIED BY 'MyNewPass4!' WITH GRANT OPTION;
 ```
 
-10,配置默认编码为 utf8
+11,配置默认编码为 utf8
 
 MySQL 默认为 latin1, 一般修改为 UTF-8
 
@@ -157,7 +176,7 @@ mysql> SHOW VARIABLES LIKE 'character%';
 8 rows in set (0.00 sec
 ```
 
-11,开启端口
+12,开启端口
 
 ```
 sudo firewall-cmd --zone=public --add-port=3306/tcp --permanent
