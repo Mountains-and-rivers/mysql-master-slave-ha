@@ -145,7 +145,8 @@ sudo systemctl restart mysqld
 10,添加远程登录用户
 
 ```
-GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' IDENTIFIED BY 'MyNewPass4!' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' IDENTIFIED BY 'MyNewPass4!' WITH GRANT OPTION; 
+flush privileges
 ```
 
 11,配置默认编码为 utf8
