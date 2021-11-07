@@ -146,7 +146,7 @@ sudo systemctl restart mysqld
 
 ```
 GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' IDENTIFIED BY 'MyNewPass4!' WITH GRANT OPTION; 
-flush privileges
+flush privileges;
 ```
 
 11,配置默认编码为 utf8
